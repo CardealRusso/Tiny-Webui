@@ -7,4 +7,4 @@ My plan:
 - Add linux/mac support
 
 Not planning to:
-Add support for firefox [Reason here](https://bugzilla.mozilla.org/show_bug.cgi?id=1682593)
+-Add support for firefox [Reason here](https://bugzilla.mozilla.org/show_bug.cgi?id=1682593)
