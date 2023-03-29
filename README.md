@@ -9,6 +9,11 @@ My plan:
 Not planning to:
 - Add support for firefox [Reason here](https://bugzilla.mozilla.org/show_bug.cgi?id=1682593)
 
+Why:
+- 4.5kb hello world
+- Small, clean and readable code
+- No dependencies (edge is now forced and unremovable from windows 11)
+
 ```
 tcc -lAdvapi32  -Wall -Wl -Os -s -o test.exe src.c
 ```
