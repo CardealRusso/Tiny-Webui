@@ -1,10 +1,23 @@
 #include <Windows.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+#include <time.h>
+
+void create_html_file(char* filename) {
+    const char* html_content = "<style>body{background-color:#202124;color:BDC1C6;font-family:Cambria,Georgia,serif;margin:auto;width:59%;border:1px solid #3c4043;padding:10px;overflow:hidden}</style><title>Tiny-Webui</title><link rel=icon type=image/x-icon href=https://static-00.iconduck.com/assets.00/webview-icon-512x512-9tt187jx.png><h1>Tiny-WebUI</h1> Running on <script>/*<![CDATA[*/window.resizeTo(800,600);document.addEventListener('keydown',function(a){a=a||window.event;116==a.keyCode&&a.preventDefault()});document.addEventListener('contextmenu',function(a){return a.preventDefault()});var agent=window.navigator.userAgent.toLowerCase(),browser=-1<agent.indexOf('vivaldi')?'Vivaldi':-1<agent.indexOf('edg')?'Edge':-1<agent.indexOf('chrome')&&window.chrome?'Chrome':-1<agent.indexOf('brave')&&window.chrome?'Brave':'other';document.body.innerHTML+=browser;/*]]>*/</script>";
+    FILE* fp = fopen(filename, "w");
+    if (fp != NULL) {
+        fprintf(fp, "%s", html_content);
+        fclose(fp);
+    }
+}
 
 int main() {
     const char* ChromiumBrowsers[] = {"chrome", "msedge", "vivaldi", "brave"};
     char path[MAX_PATH];
+    char filename[MAX_PATH];
+    char command[MAX_PATH + 200];
 
     for (int i = 0; i < sizeof(ChromiumBrowsers)/sizeof(ChromiumBrowsers[0]); i++) {
         HKEY hKey;
@@ -15,9 +28,13 @@ int main() {
             RegOpenKeyEx(HKEY_LOCAL_MACHINE, path, 0, KEY_READ, &hKey) == ERROR_SUCCESS) {
             if (RegQueryValueEx(hKey, "Path", NULL, NULL, (LPBYTE)path, &pathSize) == ERROR_SUCCESS) {
                 RegCloseKey(hKey);
-                char command[MAX_PATH + 1000];
-                //I needed to use base64 for the html because windows insists on refusing to correctly pass the quotes to the browser in the --app value
-                sprintf(command, "\"%s\\%s.exe\" --no-first-run --disable-gpu --disable-software-rasterizer --no-proxy-server --safe-mode --disable-extensions --disable-background-mode --disable-plugins --disable-plugins-discovery --disable-translate --bwsi --disable-sync --incognito --app=data:text/html;charset=utf-8;base64,PHN0eWxlPgpib2R5IHsKICBiYWNrZ3JvdW5kLWNvbG9yOiMyMDIxMjQ7CiAgY29sb3I6QkRDMUM2OwogIGZvbnQtZmFtaWx5OiBDYW1icmlhLCBHZW9yZ2lhLCBzZXJpZjsKICBtYXJnaW46IGF1dG87CiAgd2lkdGg6IDU5JTsKICBib3JkZXI6IDFweCBzb2xpZCAjM0M0MDQzOwogIHBhZGRpbmc6IDEwcHg7CglvdmVyZmxvdzogaGlkZGVuOwp9Cjwvc3R5bGU+Cjx0aXRsZT5UaW55LVdlYnVpPC90aXRsZT4KPGxpbmsgcmVsPSJpY29uIiB0eXBlPSJpbWFnZS94LWljb24iIGhyZWY9Imh0dHBzOi8vc3RhdGljLTAwLmljb25kdWNrLmNvbS9hc3NldHMuMDAvd2Vidmlldy1pY29uLTUxMng1MTItOXR0MTg3angucG5nIj4KPGgxPlRpbnktV2ViVUk8L2gxPgpSdW5uaW5nIG9uIAoKPHNjcmlwdD4Kd2luZG93LnJlc2l6ZVRvKDgwMCw2MDApOwpkb2N1bWVudC5hZGRFdmVudExpc3RlbmVyKCdrZXlkb3duJywgKGUpID0+IHsKICAgIGUgPSBlIHx8IHdpbmRvdy5ldmVudDsKICAgIGlmKGUua2V5Q29kZSA9PSAxMTYpewogICAgICAgIGUucHJldmVudERlZmF1bHQoKTsKICAgIH0KfSk7CmRvY3VtZW50LmFkZEV2ZW50TGlzdGVuZXIoJ2NvbnRleHRtZW51JywgZXZlbnQgPT4gZXZlbnQucHJldmVudERlZmF1bHQoKSk7CmNvbnN0IGFnZW50ID0gd2luZG93Lm5hdmlnYXRvci51c2VyQWdlbnQudG9Mb3dlckNhc2UoKTsKICBjb25zdCBicm93c2VyID0KICAgIGFnZW50LmluZGV4T2YoJ2VkZ2UnKSA+IC0xID8gJ2VkZ2UnCiAgICAgIDogYWdlbnQuaW5kZXhPZignZWRnJykgPiAtMSA/ICdjaHJvbWl1bSBiYXNlZCBlZGdlJwogICAgICA6IGFnZW50LmluZGV4T2YoJ29wcicpID4gLTEgJiYgd2luZG93Lm9wciA/ICdvcGVyYScKICAgICAgOiBhZ2VudC5pbmRleE9mKCdjaHJvbWUnKSA+IC0xICYmIHdpbmRvdy5jaHJvbWUgPyAnY2hyb21lJwogICAgICA6IGFnZW50LmluZGV4T2YoJ3RyaWRlbnQnKSA+IC0xID8gJ2llJwogICAgICA6IGFnZW50LmluZGV4T2YoJ2ZpcmVmb3gnKSA+IC0xID8gJ2ZpcmVmb3gnCiAgICAgIDogYWdlbnQuaW5kZXhPZignc2FmYXJpJykgPiAtMSA/ICdzYWZhcmknCiAgICAgIDogJ290aGVyJzsKZG9jdW1lbnQuYm9keS5pbm5lckhUTUwrPWJyb3dzZXIKPC9zY3JpcHQ+Cg==", path, ChromiumBrowsers[i]);
+
+                char* temp_dir = getenv("TEMP");
+                srand(time(NULL));
+                sprintf(filename, "%s\\tiny-webui_%d.html", temp_dir, rand()); 
+                create_html_file(filename);
+
+                sprintf(command, "\"%s\\%s.exe\" --no-first-run --disable-gpu --disable-software-rasterizer --no-proxy-server --safe-mode --disable-extensions --disable-background-mode --disable-plugins --disable-plugins-discovery --disable-translate --bwsi --disable-sync --incognito --app=%s", path, ChromiumBrowsers[i], filename);
                 system(command);
                 break;
             }
