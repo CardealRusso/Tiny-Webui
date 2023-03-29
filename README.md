@@ -11,7 +11,7 @@ Not planning to:
 
 Why:
 - 4.5kb hello world exe
-- Small, clean and readable code
+- Small, clean, readable and hackable code
 - No dependencies
 
 ```
