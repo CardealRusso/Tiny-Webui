@@ -3,7 +3,7 @@
 #include <string.h>
 
 int main() {
-    const char* ChromiumBrowsers[] = {"chrome", "msedge", "epic", "vivaldi", "brave", "opera"};
+    const char* ChromiumBrowsers[] = {"chrome", "msedge", "vivaldi", "brave"};
     char path[MAX_PATH];
 
     for (int i = 0; i < sizeof(ChromiumBrowsers)/sizeof(ChromiumBrowsers[0]); i++) {
