@@ -10,6 +10,8 @@ void create_html_file(char* filename) {
     if (fp != NULL) {
         fprintf(fp, "%s", html_content);
         fclose(fp);
+    } else {
+        exit(EXIT_FAILURE);
     }
 }
 
