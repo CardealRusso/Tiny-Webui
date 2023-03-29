@@ -12,7 +12,7 @@ Not planning to:
 Why:
 - 4.5kb hello world
 - Small, clean and readable code
-- No dependencies (edge is now forced and unremovable from windows 11)
+- No dependencies
 
 ```
 tcc -lAdvapi32  -Wall -Wl -Os -s -o test.exe src.c
