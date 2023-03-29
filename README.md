@@ -10,7 +10,7 @@ Not planning to:
 - Add support for firefox [Reason here](https://bugzilla.mozilla.org/show_bug.cgi?id=1682593)
 
 Why:
-- 4.5kb hello world
+- 4.5kb hello world exe
 - Small, clean and readable code
 - No dependencies
 
