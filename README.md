@@ -1,9 +1,12 @@
 # Tiny-Webui
 Currently an idea.
 
-My plan to:
+My plan:
+
 Use it as a lib
+
 Improve the code
+
 Add linux/mac support
 
 Not planning to:
