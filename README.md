@@ -14,6 +14,9 @@ Why:
 - Small, clean, readable and hackable code
 - No dependencies
 
+Current Limitations
+- Only Windows
+- Only Chrome, Chromium, Edge, Vivaldi and Edge browsers
 ```
 tcc -lAdvapi32  -Wall -Wl,-subsystem=windows -Os -s -o test.exe src.c
 ```
