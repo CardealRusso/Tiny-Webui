@@ -1,4 +1,4 @@
-# Tiny-[WebUI]([https://bugzilla.mozilla.org/show_bug.cgi?id=1682593](https://github.com/alifcommunity/webui))
+# Tiny-WebUI
 Currently an idea.
 
 My plan:
