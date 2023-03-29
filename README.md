@@ -1,5 +1,5 @@
 # Tiny-WebUI
-Currently an idea.
+Currently an idea. Based on [WebUI](https://github.com/alifcommunity/webui)
 
 My plan:
 - Use it as a lib
