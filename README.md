@@ -15,5 +15,5 @@ Why:
 - No dependencies
 
 ```
-tcc -lAdvapi32  -Wall -Wl -Os -s -o test.exe src.c
+tcc -lAdvapi32  -Wall -Wl,-subsystem=windows -Os -s -o test.exe src.c
 ```
