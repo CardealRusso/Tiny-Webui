@@ -30,4 +30,4 @@ Ram usage
 
 ![image](https://user-images.githubusercontent.com/34981798/228827631-e2b518ce-9940-4cac-a9a7-678467be415f.png)
 
-No other browser instances were running. If the "app" is run in a browser that is already running, this tab of "app" will add less than 20mb of ram usage.
+No other browser instances were running. If the "app" is run in a browser that is already running, this tab of "app" will add less than 20mb of ram usage. (these numbers must vary a lot between browsers and, mainly, the content of the page)
