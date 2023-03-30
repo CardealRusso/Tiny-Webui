@@ -21,7 +21,7 @@ void create_html_file(char* filename) {
 }
 
 int main() {
-    const char* ChromiumBrowsers[] = {"chromium-browser","chrome-browser","Chrome","Chromium", "chrome", "msedge", "vivaldi", "brave"};
+    const char* ChromiumBrowsers[] = {"chrome","msedge", "vivaldi", "brave", "chromium-browser","chrome-browser","Chrome","Chromium"};
     char path[MAX_PATH];
     char filename[MAX_PATH];
     char command[MAX_PATH*2];
@@ -52,13 +52,14 @@ int main() {
             browser = (char*)ChromiumBrowsers[i];
             break;
         }
-    #endif
+      #endif
     }
     if (browser != NULL) {
         create_html_file(filename);
         sprintf(command, "\"%s\\%s\" --no-first-run --disable-gpu --disable-software-rasterizer --no-proxy-server --safe-mode --disable-extensions --disable-background-mode --disable-plugins --disable-plugins-discovery --disable-translate --bwsi --disable-sync --incognito --app=%s", path, browser, filename);
         system(command);
+        return 0;
+    } else {
+        exit(EXIT_FAILURE);
     }
-
-    return 0;
 }
