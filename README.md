@@ -12,11 +12,11 @@ Not planning to:
 Why:
 - 4.5kb hello world exe
 - Small, clean, readable and hackable code
-- No dependencies
+- No dependencies (Edge is now forced and not removable as of windows 11, so it is safe to say that a browser is not a dependency)
 
 Current Limitations
-- Only Windows
-- Only Chrome, Chromium, Edge, Vivaldi and Edge browsers
+- Windows Only
+- Only Chrome, Chromium, Edge, Vivaldi and Brave browsers
 ```
 tcc -lAdvapi32  -Wall -Wl,-subsystem=windows -Os -s -o test.exe src.c
 ```
