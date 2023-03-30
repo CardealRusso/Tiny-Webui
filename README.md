@@ -1,7 +1,7 @@
 # Tiny-WebUI
 Currently an idea. Based on [WebUI](https://github.com/alifcommunity/webui)
 
-My plan:
+Planning to:
 - Use it as a lib
 - Improve the code
 - Add linux/mac support
