@@ -21,7 +21,7 @@ void create_html_file(char* filename) {
 }
 
 int main() {
-    const char* ChromiumBrowsers[] = {"chrome", "msedge", "vivaldi", "brave"};
+    const char* ChromiumBrowsers[] = {"chromium-browser","chrome-browser","Chrome.App","Chromium.App", "chrome", "msedge", "vivaldi", "brave"};
     char path[MAX_PATH];
     char filename[MAX_PATH];
     char command[MAX_PATH*2];
@@ -42,14 +42,21 @@ int main() {
             }
             RegCloseKey(hKey);
         }
-      #else
-        // Check if the browser executable exists in PATH
-        sprintf(path, "%s/%s", getenv("PATH"), ChromiumBrowsers[i]);
-        if (access(path, F_OK) == 0) {
+      #elif __linux__
+        sprintf(path, "/usr/bin/%s", ChromiumBrowsers[i]);
+
+        if (access(path, X_OK) == 0) {
             browser = (char*)ChromiumBrowsers[i];
             break;
         }
-      #endif
+      #elif __APPLE__
+        sprintf(path, "/Applications/%s.app/Contents/MacOS/%s", ChromiumBrowsers[i], ChromiumBrowsers[i]);
+
+        if (access(path, X_OK) == 0) {
+            browser = (char*)ChromiumBrowsers[i];
+            break;
+        }
+    #endif
     }
     if (browser != NULL) {
         create_html_file(filename);
