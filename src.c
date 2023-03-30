@@ -4,12 +4,10 @@
 
 #ifdef _WIN32
 #include <Windows.h>
-#include <string.h>
-#include <tchar.h>
 #endif
 
 void create_html_file(char* filename) {
-    const char* html_content = "<style>body{background-color:#202124;color:BDC1C6;font-family:Cambria,Georgia,serif;margin:auto;width:59%;border:1px solid #3c4043;padding:10px;overflow:hidden}</style><title>Tiny-Webui</title><link rel=icon type=image/x-icon href=https://static-00.iconduck.com/assets.00/webview-icon-512x512-9tt187jx.png><h1>Tiny-WebUI</h1> Running on <script>/*<![CDATA[*/window.resizeTo(800,600);document.addEventListener('keydown',function(a){a=a||window.event;116==a.keyCode&&a.preventDefault()});document.addEventListener('contextmenu',function(a){return a.preventDefault()});var agent=window.navigator.userAgent.toLowerCase(),browser=-1<agent.indexOf('vivaldi')?'Vivaldi':-1<agent.indexOf('edg')?'Edge':-1<agent.indexOf('chrome')&&window.chrome?'Chrome':-1<agent.indexOf('brave')&&window.chrome?'Brave':'other';document.body.innerHTML+=browser;/*]]>*/</script>";
+    const char* html_content = "<style> body { background-color: #202124; color: BDC1C6; font-family: Cambria, Georgia, serif; margin: auto; width: 59%; border: 1px solid #3c4043; padding: 10px; overflow: hidden; }</style><title>Tiny-Webui</title><link rel=icon href=https://i.imgur.com/MwgvSt9.png><h1>Tiny-WebUI</h1><script>window.resizeTo(800,600);document.addEventListener('keydown', function(event) { event.preventDefault();});document.addEventListener('contextmenu', function(event) { event.preventDefault();});document.addEventListener('wheel', function(event) { event.preventDefault();});navigator.userAgentData.brands.forEach(brand => brand.brand.includes('Not A(Brand') || (document.body.innerHTML += `${brand.brand} ${brand.version}<br>`));</script>";
     char* temp_dir = getenv("TEMP");
     srand(time(NULL));
     sprintf(filename, "%s\\tiny-webui_%d.html", temp_dir, rand());
@@ -29,8 +27,8 @@ int main() {
     char command[MAX_PATH*2];
     char* browser = NULL;
 
-#ifdef _WIN32
     for (int i = 0; i < sizeof(ChromiumBrowsers)/sizeof(ChromiumBrowsers[0]); i++) {
+      #ifdef _WIN32
         HKEY hKey;
         DWORD pathSize = sizeof(path);
         sprintf(path, "Software\\Microsoft\\Windows\\CurrentVersion\\App Paths\\%s.exe", ChromiumBrowsers[i]);
@@ -39,17 +37,20 @@ int main() {
             RegOpenKeyEx(HKEY_LOCAL_MACHINE, path, 0, KEY_READ, &hKey) == ERROR_SUCCESS) {
             if (RegQueryValueEx(hKey, "Path", NULL, NULL, (LPBYTE)path, &pathSize) == ERROR_SUCCESS) {
                 RegCloseKey(hKey);
-								
                 browser = (char*)ChromiumBrowsers[i];
-								
                 break;
             }
             RegCloseKey(hKey);
         }
+      #else
+        // Check if the browser executable exists in PATH
+        sprintf(path, "%s/%s", getenv("PATH"), ChromiumBrowsers[i]);
+        if (access(path, F_OK) == 0) {
+            browser = (char*)ChromiumBrowsers[i];
+            break;
+        }
+      #endif
     }
-#else
-    // Code for Linux goes here
-#endif
     if (browser != NULL) {
         create_html_file(filename);
         sprintf(command, "\"%s\\%s\" --no-first-run --disable-gpu --disable-software-rasterizer --no-proxy-server --safe-mode --disable-extensions --disable-background-mode --disable-plugins --disable-plugins-discovery --disable-translate --bwsi --disable-sync --incognito --app=%s", path, browser, filename);
