@@ -1,9 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <limits.h>
 
 #ifdef _WIN32
 #include <Windows.h>
+#endif
+#ifdef __linux__
+#include <unistd.h>
 #endif
 
 void create_html_file(char* filename) {
@@ -22,9 +26,9 @@ void create_html_file(char* filename) {
 
 int main() {
     const char* ChromiumBrowsers[] = {"chrome","msedge", "vivaldi", "brave", "chromium-browser","chrome-browser","Chrome","Chromium"};
-    char path[MAX_PATH];
-    char filename[MAX_PATH];
-    char command[MAX_PATH*2];
+    char path[PATH_MAX];
+    char filename[PATH_MAX];
+    char command[PATH_MAX*2];
     char* browser = NULL;
 
     for (int i = 0; i < sizeof(ChromiumBrowsers)/sizeof(ChromiumBrowsers[0]); i++) {
