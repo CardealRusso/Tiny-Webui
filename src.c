@@ -21,7 +21,7 @@ void create_html_file(char* filename) {
 }
 
 int main() {
-    const char* ChromiumBrowsers[] = {"chromium-browser","chrome-browser","Chrome.App","Chromium.App", "chrome", "msedge", "vivaldi", "brave"};
+    const char* ChromiumBrowsers[] = {"chromium-browser","chrome-browser","Chrome","Chromium", "chrome", "msedge", "vivaldi", "brave"};
     char path[MAX_PATH];
     char filename[MAX_PATH];
     char command[MAX_PATH*2];
@@ -42,16 +42,12 @@ int main() {
             }
             RegCloseKey(hKey);
         }
-      #elif __linux__
+      #else
+        #ifdef __linux__
         sprintf(path, "/usr/bin/%s", ChromiumBrowsers[i]);
-
-        if (access(path, X_OK) == 0) {
-            browser = (char*)ChromiumBrowsers[i];
-            break;
-        }
-      #elif __APPLE__
+        #elif __APPLE__
         sprintf(path, "/Applications/%s.app/Contents/MacOS/%s", ChromiumBrowsers[i], ChromiumBrowsers[i]);
-
+        #endif
         if (access(path, X_OK) == 0) {
             browser = (char*)ChromiumBrowsers[i];
             break;
