@@ -1,8 +1,12 @@
-#include <Windows.h>
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
 #include <time.h>
+
+#ifdef _WIN32
+#include <Windows.h>
+#include <string.h>
+#include <tchar.h>
+#endif
 
 void create_html_file(char* filename) {
     const char* html_content = "<style>body{background-color:#202124;color:BDC1C6;font-family:Cambria,Georgia,serif;margin:auto;width:59%;border:1px solid #3c4043;padding:10px;overflow:hidden}</style><title>Tiny-Webui</title><link rel=icon type=image/x-icon href=https://static-00.iconduck.com/assets.00/webview-icon-512x512-9tt187jx.png><h1>Tiny-WebUI</h1> Running on <script>/*<![CDATA[*/window.resizeTo(800,600);document.addEventListener('keydown',function(a){a=a||window.event;116==a.keyCode&&a.preventDefault()});document.addEventListener('contextmenu',function(a){return a.preventDefault()});var agent=window.navigator.userAgent.toLowerCase(),browser=-1<agent.indexOf('vivaldi')?'Vivaldi':-1<agent.indexOf('edg')?'Edge':-1<agent.indexOf('chrome')&&window.chrome?'Chrome':-1<agent.indexOf('brave')&&window.chrome?'Brave':'other';document.body.innerHTML+=browser;/*]]>*/</script>";
@@ -21,6 +25,7 @@ int main() {
     char filename[MAX_PATH];
     char command[MAX_PATH + 200];
 
+#ifdef _WIN32
     for (int i = 0; i < sizeof(ChromiumBrowsers)/sizeof(ChromiumBrowsers[0]); i++) {
         HKEY hKey;
         DWORD pathSize = sizeof(path);
@@ -43,6 +48,9 @@ int main() {
             RegCloseKey(hKey);
         }
     }
+#else
+    // Code for Linux goes here
+#endif
 
     return 0;
 }
