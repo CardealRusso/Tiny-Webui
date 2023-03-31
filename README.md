@@ -18,7 +18,8 @@ tcc -lAdvapi32  -Wall -Wl,-subsystem=windows -Os -s -o test.exe src.c
 
 Screenshots of example program (on ungoogled-chromium)
 
-![image](https://user-images.githubusercontent.com/34981798/228993784-a02b93fc-0e6f-4918-bdcb-082f59c5eca7.png)
+![image](https://user-images.githubusercontent.com/34981798/228994403-0d55a038-add7-42e2-a669-a910c679794e.png)
+
 ![image](https://user-images.githubusercontent.com/34981798/228993821-35cfc0a6-3b86-4f22-8662-49b16371c71f.png)
 
 
