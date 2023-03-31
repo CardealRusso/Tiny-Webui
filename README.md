@@ -18,7 +18,9 @@ tcc -lAdvapi32  -Wall -Wl,-subsystem=windows -Os -s -o test.exe src.c
 
 Screenshots of example program (on ungoogled-chromium)
 
-![image](https://user-images.githubusercontent.com/34981798/228827427-205ac104-e1c5-4625-bfd5-ce207079f20b.png)
+![image](https://user-images.githubusercontent.com/34981798/228993784-a02b93fc-0e6f-4918-bdcb-082f59c5eca7.png)
+![image](https://user-images.githubusercontent.com/34981798/228993821-35cfc0a6-3b86-4f22-8662-49b16371c71f.png)
+
 
 Ram usage
 
