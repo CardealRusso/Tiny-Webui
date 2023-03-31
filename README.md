@@ -3,15 +3,15 @@ Currently an idea. Based on [WebUI](https://github.com/alifcommunity/webui)
 
 Planning to:
 - Use it as a lib
-- Websocket communication
+- Communication between the C and the page (Through Websocket)
 
 Why:
 - 4.5kb hello world exe
 - Small, clean, readable and hackable code
 - No dependencies besides a browser
 
-Current Limitations
-- Only Chrome, Chromium, Edge, Vivaldi and Brave browsers
+Supported Web browsers
+- Chrome, Chromium, Edge, Vivaldi and Brave
 ```
 tcc -lAdvapi32  -Wall -Wl,-subsystem=windows -Os -s -o test.exe src.c
 ```
