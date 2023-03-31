@@ -12,14 +12,11 @@
 
 void create_html_file(char* filename) {
     const char* html_content = "<style> body { background-color: #202124; color: BDC1C6; font-family: Cambria, Georgia, serif; margin: auto; width: 59%; border: 1px solid #3c4043; padding: 10px; overflow: hidden; }</style><title>Tiny-Webui</title><link rel=icon href=https://i.imgur.com/MwgvSt9.png><h1>Tiny-WebUI</h1><script> window.resizeTo(800, 600); document.addEventListener('keydown', function (event) { event.preventDefault(); }); document.addEventListener('contextmenu', function (event) { event.preventDefault(); }); document.addEventListener('wheel', function (event) { event.preventDefault(); }); navigator.userAgentData.brands.forEach((brand) => brand.brand.includes('Not') || (document.body.innerHTML += `${brand.brand} ${brand.version}<br>`));document.body.innerHTML += 'On '+navigator.userAgentData.platform</script>";
-    char* temp_dir = getenv("TEMP");
-    srand(time(NULL));
-    if (!temp_dir) {
-        temp_dir = "/tmp";
-        sprintf(filename, "%s/tiny-webui_%d.html", temp_dir, rand());
-    } else {
-        sprintf(filename, "%s\\tiny-webui_%d.html", temp_dir, rand());
-    }
+    #ifdef _WIN32
+        sprintf(filename, "%s\\tiny-webui_%d.html", getenv("TEMP"), rand());
+    #else
+        sprintf(filename, "/tmp/tiny-webui_%d.html", rand());
+    #endif
     FILE* fp = fopen(filename, "w");
     if (fp != NULL) {
         fprintf(fp, "%s", html_content);
@@ -30,7 +27,7 @@ void create_html_file(char* filename) {
 }
 
 int main() {
-    const char* ChromiumBrowsers[] = {"chrome","msedge", "vivaldi", "brave", "chromium-browser","chrome-browser","Chrome","Chromium"};
+    const char* ChromiumBrowsers[] = {"chrome","msedge", "vivaldi", "brave", "chromium"};
     char path[PATH_MAX];
     char filename[PATH_MAX];
     char command[PATH_MAX*2];
@@ -52,7 +49,7 @@ int main() {
         }
       #else
         #ifdef __linux__
-        sprintf(filename, "/usr/bin/%s", ChromiumBrowsers[i]);
+        sprintf(filename, "/usr/bin/%s-browser", ChromiumBrowsers[i]);
         #elif __APPLE__
         sprintf(filename, "/Applications/%s.app/Contents/MacOS/%s", ChromiumBrowsers[i], ChromiumBrowsers[i]);
         #endif
@@ -64,7 +61,7 @@ int main() {
     }
     if (strlen(path) > 0) {
         create_html_file(filename);
-        sprintf(command, "%s --allow-file-access-from-files --no-sandbox --no-first-run --disable-gpu --disable-software-rasterizer --no-proxy-server --safe-mode --disable-extensions --disable-background-mode --disable-plugins --disable-plugins-discovery --disable-translate --bwsi --disable-sync --incognito --app=file:///%s", path, filename);
+        sprintf(command, "\"%s\" --allow-file-access-from-files --no-sandbox --no-first-run --disable-gpu --disable-software-rasterizer --no-proxy-server --safe-mode --disable-extensions --disable-background-mode --disable-plugins --disable-plugins-discovery --disable-translate --bwsi --disable-sync --incognito --app=file:///%s", path, filename);
         system(command);
         return 0;
     } else {
