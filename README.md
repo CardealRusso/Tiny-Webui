@@ -6,7 +6,7 @@ Planning to:
 - Communication between the C and the page (Through Websocket)
 
 Why:
-- 4.5kb hello world exe
+- 4.5kb hello world exe (3.5kb with upx)
 - Small, clean, readable and hackable code
 - No dependencies besides a browser
 
