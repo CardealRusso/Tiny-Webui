@@ -10,8 +10,9 @@ Why:
 - Small, clean, readable and hackable code
 - No dependencies besides a browser
 
-Supported Web browsers
-- Chrome, Chromium, Edge, Vivaldi and Brave
+Compatibility
+- OS: Windows, Linux and Mac (Mac untested)
+- Browser: Chrome, Chromium, Edge, Vivaldi and Brave
 ```
 tcc -lAdvapi32  -Wall -Wl,-subsystem=windows -Os -s -o test.exe src.c
 ```
