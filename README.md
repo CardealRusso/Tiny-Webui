@@ -12,7 +12,7 @@ Why:
 
 Compatibility
 - OS: Windows, Linux and Mac (Mac untested)
-- Browser: Chrome, Chromium, Edge, Vivaldi and Brave
+- Browser: Chrome, Chromium, Edge, Vivaldi and Brave (Only Chromium tested)
 ```
 tcc -lAdvapi32  -Wall -Wl,-subsystem=windows -Os -s -o test.exe src.c
 ```
