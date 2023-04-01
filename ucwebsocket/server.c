@@ -6,8 +6,6 @@
 #include <sys/types.h>
 #include <assert.h>
 #ifdef _WIN32
-// link with Ws2_32.lib
-#pragma comment(lib,"Ws2_32.lib")
 #define close closesocket
 
 #include <winsock2.h>
