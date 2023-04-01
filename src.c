@@ -61,7 +61,13 @@ int main() {
     }
     if (strlen(path) > 0) {
         create_html_file(filename);
-        sprintf(command, "\"%s\" --allow-file-access-from-files --no-sandbox --no-first-run --disable-gpu --disable-software-rasterizer --no-proxy-server --safe-mode --disable-extensions --disable-background-mode --disable-plugins --disable-plugins-discovery --disable-translate --bwsi --disable-sync --incognito --app=file:///%s", path, filename);
+        sprintf(command, "%s --allow-file-access-from-files --no-sandbox --no-first-run --disable-gpu --disable-software-rasterizer --no-proxy-server --safe-mode --disable-extensions --disable-background-mode --disable-plugins --disable-plugins-discovery --disable-translate --bwsi --disable-sync --incognito --app=file:///%s", path, filename);
+        #ifdef __linux__
+            uid_t euid = geteuid();
+            if (euid == 0) {
+                strcat(command, " --no-sandbox");
+            }
+        #endif
         system(command);
         return 0;
     } else {
