@@ -1,5 +1,8 @@
 /* The code contains multiple potential issues, including but not limited to:
 
+- Security vulnerabilities in the browser
+- Lack of control over browser behavior
+- Potential compatibility issues
 - Lack of error checking
 - Memory corruption vulnerabilities
 - Potential buffer overflows
