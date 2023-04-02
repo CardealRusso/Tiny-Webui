@@ -1,4 +1,4 @@
-/* The code contains multiple potential issues, including but not limited to:
+/* This code contains multiple potential issues, including but not limited to:
 
 - Security vulnerabilities in the browser
 - Lack of control over browser behavior
